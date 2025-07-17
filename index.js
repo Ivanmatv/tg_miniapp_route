@@ -390,7 +390,7 @@ async function handleFileUpload(fileNumber, fieldId, nextScreen) {
         const timezoneOffset = now.getTimezoneOffset();
         const moscowTime = new Date(now.getTime() + (180 + timezoneOffset) * 60 * 1000);
         const formattedDateTime = moscowTime.toISOString();
-        extraData[DATE_FIELD_INDIVIDUAL_TASK] = formattedDateTime;
+        extraData[DATE_FIELD_ROUTE] = formattedDateTime;
         
         // Обновление записи в базе данных с дополнительными данными
         await updateRecord(currentRecordId, fieldId, file, extraData);
@@ -406,7 +406,7 @@ async function handleFileUpload(fileNumber, fieldId, nextScreen) {
 
 // Назначение обработчиков для кнопок загрузки файлов
 document.getElementById("submitFile1").addEventListener("click", () => {
-    handleFileUpload(1, INDIVIDUAL_TASK);
+    handleFileUpload(1, ROUTE);
 });
 
 
