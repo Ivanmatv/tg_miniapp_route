@@ -16,8 +16,8 @@ const RECORDS_ENDPOINT = `${BASE_URL}/api/v2/tables/${TABLE_ID}/records`;
 const FILE_UPLOAD_ENDPOINT = `${BASE_URL}/api/v2/storage/upload`;
 
 // ID полей для загрузки заданий
-ROUTE = "c2v08b0bon6lv7q", // Маршрут
-DATE_FIELD_ROUTE = "c3960t6yjyd5tg6"  // Дата загрузик маршрута
+const ROUTE = "c2v08b0bon6lv7q"; // Маршрут
+const DATE_FIELD_ROUTE = "c3960t6yjyd5tg6"  // Дата загрузик маршрута
 
 // Ключ 
 const API_KEY = "N0eYiucuiiwSGIvPK5uIcOasZc_nJy6mBUihgaYQ";
@@ -171,11 +171,8 @@ async function updateRecord(recordId, fieldId, file, extraData = {}) {
             uploadData = [uploadData];
         }
         
-        // Проверяем наличие signedPath
-        if (!uploadData.length || !uploadData[0]?.signedPath) {
-            console.error("Не получен signedPath в ответе:", uploadData);
-            throw new Error("Не удалось получить информацию о файле");
-        }
+        // Используем url или signedUrl
+        const fileUrl = firstItem.url || firstItem.signedUrl;
         
         // Получаем данные о загруженном файле
         const firstItem = uploadData[0];
@@ -198,8 +195,7 @@ async function updateRecord(recordId, fieldId, file, extraData = {}) {
                 mimetype: fileType,
                 size: fileSize,
                 title: fileName,
-                // Используем путь из ответа сервера для скачивания
-                url: `${BASE_URL}/${firstItem.path}`,
+                url: fileUrl,
                 icon: getFileIcon(fileType)
             }
         ];
@@ -355,7 +351,7 @@ function showError(element, message) {
     * @param {string} fieldId - ID поля в базе данных
     * @param {string} nextScreen - Следующий экран
     */
-async function handleFileUpload(fileNumber, fieldId, nextScreen) {
+async function handleFileUpload(fileNumber, fieldId) {
     const fileInput = document.getElementById(`fileInput${fileNumber}`);
     const errorElement = document.getElementById(`error${fileNumber}`);
     const file = fileInput.files[0];
