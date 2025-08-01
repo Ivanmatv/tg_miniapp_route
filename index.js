@@ -171,11 +171,23 @@ async function updateRecord(recordId, fieldId, file, extraData = {}) {
             uploadData = [uploadData];
         }
         
+        // Проверяем наличие элементов в массиве
+        if (!uploadData.length) {
+            console.error("Пустой ответ от сервера при загрузке файла:", uploadData);
+            throw new Error("Не удалось загрузить файл");
+        }
+        
+        const firstItem = uploadData[0];
+        
         // Используем url или signedUrl
         const fileUrl = firstItem.url || firstItem.signedUrl;
         
-        // Получаем данные о загруженном файле
-        const firstItem = uploadData[0];
+        // Проверяем наличие URL
+        if (!fileUrl) {
+            console.error("Не получен URL в ответе:", firstItem);
+            throw new Error("Не удалось получить URL загруженного файла");
+        }
+        
         const fileName = firstItem.title || file.name;
         const fileType = file.type;
         const fileSize = file.size;
@@ -184,8 +196,9 @@ async function updateRecord(recordId, fieldId, file, extraData = {}) {
         const getFileIcon = (mimeType) => {
             if (mimeType.includes("pdf")) return "mdi-file-pdf-outline";
             if (mimeType.includes("word")) return "mdi-file-word-outline";
-            if (mimeType.includes("excel") || mimeType.includes("spreadsheet")) return "mdi-file-excel-outline";
-            if (mimeType.includes("png")) return "mdi-file-image-outline";
+            if (mimeType.includes("excel") || mimeType.includes("spreadsheet")) 
+                return "mdi-file-excel-outline";
+            if (mimeType.includes("image")) return "mdi-file-image-outline";
             return "mdi-file-outline";
         };
         
