@@ -5,19 +5,16 @@ tg.MainButton.hide();
 
 // Конфигурация NocoDB API
 const BASE_URL = "https://ndb.fut.ru";
-const TABLE_ID = "maiff22q0tefj6t";
+const TABLE_ID = "moqj9txmglwy87u";
 const VIEW_ID = "vwy5xmvdj8cuwwcx";
-
-// Добавим ID поля для даты загрузки
-const DATE_FIELD_ID = "c3960t6yjyd5tg6";
 
 // Эндпоинты для работы с записями
 const RECORDS_ENDPOINT = `${BASE_URL}/api/v2/tables/${TABLE_ID}/records`;
 const FILE_UPLOAD_ENDPOINT = `${BASE_URL}/api/v2/storage/upload`;
 
 // ID полей для загрузки заданий
-const ROUTE = "c2v08b0bon6lv7q"; // Маршрут
-const DATE_FIELD_ROUTE = "c3960t6yjyd5tg6"  // Дата загрузик маршрута
+const ROUTE = "c7n7gdaervkhc50"; // Маршрут
+const DATE_FIELD_ROUTE = "cu7xa90kqnjqi00"  // Дата загрузик маршрута
 
 // Ключ 
 const API_KEY = "N0eYiucuiiwSGIvPK5uIcOasZc_nJy6mBUihgaYQ";
